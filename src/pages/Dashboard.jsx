@@ -1,58 +1,70 @@
-import React, { useState } from 'react'
-import {stocks} from  "../Data"
-import { Link } from "react-router-dom"
+import { useState, useEffect } from "react";
+import {useParams, useNavigate} from "react-router-dom";
 
-function  Dashbord()  {
-  //const[stocks,setStocks]=useState([])
- 
-    console.log(stocks)
-  return (
-     <div className='container'>
-          <h1 >Most Active Stocks</h1>
-    <div className='stocks'>
 
-      
-        <div>
-        <h2>Company Name</h2>
-        {stocks.map((stock)=>{
-        const{name,symbol}=stock;
-        return(
-           
-            
-            <Link key ={symbol} to={'/stocks/'+symbol}>
+
+const Dashboard = () => {
+
+    let apikey = import.meta.env.VITE_API_URL;
+    // console.log(apikey)
+
+    let {symbol} = useParams();
+
+    let navigate = useNavigate()
+
+    const url=`https://financialmodelingprep.com/api/v3/stock/list?apikey=${apikey}`;
+    // console.log(url)
+
+    const [stock, setStock] = useState({})
+
+    async function getStock(){
+        try{
+            const response = await fetch(url);
+            const data = await response.json();
+            // console.log(data)
+
+            const filteredStock = data.filter(data => {
+                if(data.symbol == symbol){
+                    return true
+                } 
+            })
+            setStock(filteredStock)
+        }catch(error){
+            console.log(error);
+        }
         
-            <h4>{`${name} (${symbol})`}</h4>
-            </Link>
-           
-        )
-    })} </div> 
-      <div>
-        <h2>Price</h2>
-        {stocks.map((stock)=>{
-        const{lastPrice}=stock;
-        return( 
-        
-            <h4>{lastPrice}</h4>
-          
-           
-        )
-    })} </div> 
+    }
+    // console.log(stock)
+    useEffect( ()=>{
+        getStock()
+    }, [])
+
+
+function loaded(){
+    return (
+        <div onClick={() => navigate("/")}>
     
-    <div>
-        <h2>Change</h2>
-        {stocks.map((stock)=>{
-        const{change, symbol}=stock;
-        let changeStyle={color:change<0 ? "red ": "green"}
-        return( 
+                <h1>Stock name:<br/> {stock[0]?.name}</h1>
+                <h1>Current value:<br/> {stock[0]?.price}</h1>
         
-            <h4  style={changeStyle} >{change}</h4>
-          
-           
-        )
-    })} </div> 
-    </div>
-    </div>
-  )
+        
+            
+        </div>
+      )
 }
 
-export default Dashbord
+function loading(){
+    return(
+        <div>
+            <h1>Loading...</h1>
+        </div>
+    )
+}
+
+
+return stock[0]?.price ? loaded() : loading()
+
+  
+}
+
+export default Dashboard
