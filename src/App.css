@@ -3,19 +3,20 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: lightblue;
 }
 
 .navStock{
   display: flex;
   justify-content: space-between;
-  background-color: goldenrod;
+  background-color: lightgoldenrodyellow;
   border-radius: 5px;
-  border: 2px solid lavenderblush;
+  border: 2px solid rgb(167, 37, 80);
   color: white;
   padding: 15px;
   font-size: 2em;
 }
 
 .navitem{
-  color: blueviolet;
+  color: black;
 }

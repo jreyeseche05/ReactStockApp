@@ -14,9 +14,9 @@ function App() {
     <>
       <NavStock/>
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/about' element={<About/>}/>
-        <Route path='/stocks' element={<Stocks/>}/>
+        <Route path='/' element={< Home />}/>
+        <Route path='/about' element={< About />}/>
+        <Route path='/stocks' element={<Stocks />}/>
         <Route path="/dashboard/:symbol" element={<Dashboard/>}/>
         
       </Routes>

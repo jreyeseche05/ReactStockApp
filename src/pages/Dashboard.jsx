@@ -6,14 +6,14 @@ import {useParams, useNavigate} from "react-router-dom";
 const Dashboard = () => {
 
     let apikey = import.meta.env.VITE_API_URL;
-    // console.log(apikey)
+    
 
     let {symbol} = useParams();
 
     let navigate = useNavigate()
 
-    const url=`https://financialmodelingprep.com/api/v3/stock/list?apikey=${apikey}`;
-    // console.log(url)
+    const url=`https://financialmodelingprep.com/api/v3/stock/list?&apikey=f47c4936a387bf69b7b95b33770ad6a0`;
+    
 
     const [stock, setStock] = useState({})
 
@@ -21,7 +21,7 @@ const Dashboard = () => {
         try{
             const response = await fetch(url);
             const data = await response.json();
-            // console.log(data)
+           
 
             const filteredStock = data.filter(data => {
                 if(data.symbol == symbol){
@@ -34,7 +34,7 @@ const Dashboard = () => {
         }
         
     }
-    // console.log(stock)
+   
     useEffect( ()=>{
         getStock()
     }, [])
